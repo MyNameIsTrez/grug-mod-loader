@@ -21,6 +21,7 @@ def main() -> int:
         return 1
 
     validator_cls = jsonschema.validators.validator_for(schema)
+    validator_cls.check_schema(schema)
     validator = validator_cls(schema)
 
     about_files = sorted(mods_dir.rglob("about.json"))
