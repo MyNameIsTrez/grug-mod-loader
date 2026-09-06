@@ -1,0 +1,36 @@
+name: Validate Mod Metadata
+
+on:
+  push:
+    paths:
+      - 'about_schema.json'
+      - 'about_schema.py'
+      - 'mods/**/about.json'
+      - '.github/workflows/validate-about.yml'
+  pull_request:
+    paths:
+      - 'about_schema.json'
+      - 'about_schema.py'
+      - 'mods/**/about.json'
+      - '.github/workflows/validate-about.yml'
+
+jobs:
+  validate-about:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install jsonschema
+
+      - name: Validate about.json files
+        run: |
+          python3 about_schema.py
